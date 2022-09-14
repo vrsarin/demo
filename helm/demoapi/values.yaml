@@ -28,7 +28,8 @@ probes:
 ingress:
   enabled: true
   annotations:
-    {}
+    - "nginx.ingress.kubernetes.io/rewrite-target=/"
+    - "ingress.kubernetes.io/ssl-redirect: 'false'"
     # kubernetes.io/tls-acme: "true"
   path: /
   # hosts:
