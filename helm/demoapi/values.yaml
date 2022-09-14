@@ -6,8 +6,9 @@ replicaCount: 1
 image:
   repository: registry.local:5000/demoapi
   tag: latest
-  pullPolicy: IfNotPresent
-imagePullSecrets: []
+  pullPolicy: Latest
+imagePullSecrets:
+  []
   # Optionally specify an array of imagePullSecrets.
   # Secrets must be manually created in the namespace.
   # ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
@@ -25,17 +26,20 @@ probes:
   enabled: false
 
 ingress:
-  enabled: false
-  annotations: {}
+  enabled: true
+  annotations:
+    {}
     # kubernetes.io/tls-acme: "true"
-  path: /
+  path: /demo
   # hosts:
   #   - chart-example.local
-  tls: []
+  tls:
+    []
     # - secretName: chart-example-tls
     #   hosts:
     #     - chart-example.local
-secrets: {}
+secrets:
+  {}
   # Optionally specify a set of secret objects whose values
   # will be injected as environment variables by default.
   # You should add this section to a file like secrets.yaml
@@ -47,7 +51,8 @@ secrets: {}
   # as the environment variable mysecret_mypassword=password.
   # mysecret:
   #   mypassword: password
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
