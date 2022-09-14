@@ -4,8 +4,8 @@
 fullnameOverride: demoapi
 replicaCount: 1
 image:
-  repository: registry.local:5000/demoapi:latest
-  tag: stable
+  repository: registry.local:5000/demoapi
+  tag: latest
   pullPolicy: IfNotPresent
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
