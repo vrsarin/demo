@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  demo.api:
+    container_name: demo.api
+    image: ${DOCKER_REGISTRY-}demoapi
+    build:
+      context: .
+      dockerfile: demo.api/Dockerfile
+  demo-db-pgsql:
+    container_name: demoapi-db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: demoapi
+      POSTGRES_USER: demoapi
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./.data/demo-db:/var/lib/postgresql/data

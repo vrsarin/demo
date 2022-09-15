@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace demo.api.Controllers
+namespace demo.api.Controllers.V1
 {
     [ApiController]
-    [Route("demoapi/[controller]")]
+    [Route("[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0",Deprecated = true)]
+    [ApiVersion("1.1")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -24,7 +27,10 @@ namespace demo.api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [MapToApiVersion("1.0")]
+     
+        //[Obsolete("Will be removed in version 2.0")]
+        public IEnumerable<WeatherForecast> GetV1()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -34,6 +40,20 @@ namespace demo.api.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet]
+        [MapToApiVersion("1.1")]
+        public IEnumerable<WeatherForecast> GetV1_1()
+        {
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = rng.Next(-20, 55),
+                    Summary = Summaries[rng.Next(Summaries.Length)] + "V2"
+                })
+                .ToArray();
         }
     }
 }
