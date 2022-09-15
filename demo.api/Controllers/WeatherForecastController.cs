@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace demo.api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("demoapi/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
