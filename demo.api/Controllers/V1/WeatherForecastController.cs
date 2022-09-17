@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using demo.api.Models.V1;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace demo.api.Controllers.V1
 {
     [ApiController]
     [Route("[controller]")]
     [Route("v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0",Deprecated = true)]
-    [ApiVersion("1.1")]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1-dev")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -28,7 +28,7 @@ namespace demo.api.Controllers.V1
 
         [HttpGet]
         [MapToApiVersion("1.0")]
-     
+
         //[Obsolete("Will be removed in version 2.0")]
         public IEnumerable<WeatherForecast> GetV1()
         {
@@ -43,16 +43,16 @@ namespace demo.api.Controllers.V1
         }
 
         [HttpGet]
-        [MapToApiVersion("1.1")]
-        public IEnumerable<WeatherForecast> GetV1_1()
+        [MapToApiVersion("1.1-dev")]
+        public IEnumerable<WeatherForecast> GetV1_1_dev()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)] + "V2"
-                })
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)] + "v1.1-dev"
+            })
                 .ToArray();
         }
     }
