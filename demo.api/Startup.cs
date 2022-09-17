@@ -24,7 +24,7 @@ namespace demo.api
         {
             services.AddControllers();
             //services.AddSingleton<IApplicationSettings, ApplicationSettings>();
-            services.AddOData();
+            //services.AddOData();
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetValue<string>("CacheConnection");
