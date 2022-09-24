@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: demoapi-service
 spec:
+  type: ClusterIP
   selector:
     app: demoapi
   ports:

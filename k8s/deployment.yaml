@@ -6,6 +6,8 @@ metadata:
     app: demoapi
 spec:
   replicas: 3
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: demoapi
@@ -16,6 +18,10 @@ spec:
     spec:
       containers:
         - name: demoapi
-          image: registry.local:5000/demoapi:latest
+          image: registry.local:5000/demo-api:latest
+          imagePullPolicy: Always
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
           ports:
             - containerPort: 80

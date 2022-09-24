@@ -51,7 +51,7 @@ namespace demo.api.Controllers.V1
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)] + "v1.1-dev"
+                Summary = Summaries[rng.Next(Summaries.Length)] + "v1.1-dev2"
             })
                 .ToArray();
         }
