@@ -18,7 +18,8 @@
 
 ### Configure
 
-1. Initialize local Kubternetes cluster using below command
+1.
+2. Initialize local Kubternetes cluster using below command
 
 ```powershell
 k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer --api-port 6443 --servers 3 --agents 4 --registry-create registry.local:0.0.0.0:5000
