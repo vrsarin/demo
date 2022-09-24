@@ -18,7 +18,7 @@
 
 ### Configure
 
-1. Test
+1. Testing Error
 2. Initialize local Kubternetes cluster using below command
 
 ```powershell
