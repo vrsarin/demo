@@ -1,0 +1,37 @@
+demo-api:
+  image:
+    repository: registry.local:5000/demo-api
+    pullPolicy: Always
+    tag: "latest"
+  apiPath: /api/demo/
+  env:
+    ASPNETCORE_ENVIRONMENT: Development
+  ingress:
+    enabled: true
+    hosts:
+      - host:
+        paths:
+          - path: /api/demo/
+            pathType: ImplementationSpecific
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
+  # postgresql:
+  #   enabled: false
+  # externalDatabase:
+  #   host: "test-db"
+  #   port: 5435
+  #   user: testUser
+  #   database: test-db
+  #   password: "XYX&@#Rsf"

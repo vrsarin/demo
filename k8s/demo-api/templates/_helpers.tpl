@@ -64,9 +64,96 @@ Create the name of the service account to use
 {{/*
 Create Environment Variables for demo-api
 */}}
-{{- define "helpers.list-env-variables"}}
+{{- define "demo-api.environmentVariables"}}
 {{- range $key, $val := .Values.env }}
 - name: {{ $key }}
   value: {{ $val }}
 {{- end}}
 {{- end }}
+
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "demo-api.postgresql.fullname" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "postgresql" "chartValues" .Values.postgresql "context" $) -}}
+{{- end -}}
+
+{{/*
+Return the database host for demo-api
+*/}}
+{{- define "demo-api.database.host" -}}    
+{{-  if .Values.postgresql.enabled -}}
+    {{- include "demo-api.postgresql.fullname" . | quote  -}}
+{{- else }}
+    {{- .Values.externalDatabase.host | quote }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the database port for demo-api
+*/}}
+{{- define "demo-api.database.port" -}}
+{{- if .Values.postgresql.enabled -}}
+    {{- print "5432" -}}
+{{- else }}
+    {{- .Values.externalDatabase.port }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the database name for demo-api
+*/}}
+{{- define "demo-api.database.name" -}}
+{{- if .Values.postgresql.enabled -}}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.database .Values.postgresql.auth.database | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.database | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.database | quote -}}
+    {{- end -}}
+{{- else }}
+    {{- .Values.externalDatabase.database | quote }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the database username for demo-api
+*/}}
+{{- define "demo-api.database.username" -}}
+{{- if .Values.postgresql.enabled -}}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.username .Values.postgresql.auth.username | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.username | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.username | quote -}}
+    {{- end -}}
+{{- else }}
+    {{- .Values.externalDatabase.user | quote }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the database password for demo-api
+*/}}
+{{- define "demo-api.database.password" -}}
+{{- if .Values.postgresql.enabled -}}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.password .Values.postgresql.auth.password | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.password | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.password | quote -}}
+    {{- end -}}
+{{- else }}
+    {{- .Values.externalDatabase.password | quote }}
+{{- end -}}
+{{- end -}}
