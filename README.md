@@ -30,7 +30,7 @@ k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer 
   -
 - [ ] Caching (Redis)
   - https://duongnt.com/stackexchangeredis
-- [ ] Logging (Serilog)
+- [x] Logging (Serilog)
 - [ ] grpc Services
 - [ ] Transactional Sanity and Concurrency
 - [ ] Distributed Transactions (MongoDb, CouchDb or Redis)
