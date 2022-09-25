@@ -1,0 +1,6 @@
+dependencies:
+- name: demo-api
+  repository: file://../k8s/demo-api/
+  version: 0.0.1
+digest: sha256:e52fd3c48bcab70f1b0d59a7bcd505cd6ff5cba4c3649fae72f93a735deb0e4f
+generated: "2022-09-25T12:47:53.7985968-04:00"

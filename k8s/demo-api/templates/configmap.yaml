@@ -1,3 +1,9 @@
+{{- $DBHost := include "demo-api.database.host" . -}}
+{{- $DBPort := include "demo-api.database.port" . -}}
+{{- $DBName := include "demo-api.database.name" . -}}
+{{- $DBUserName := include "demo-api.database.username" . -}}
+{{- $DBPassword := include "demo-api.database.password" . -}}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -19,6 +25,11 @@ data:
             }
         },
         "apiConfig": {
-            "basePath": "{{ .Values.apiPath }}"
+            "basePath": "{{ .Values.apiPath }}",
+            "pgsqlDBName": {{$DBName}},
+            "pgsqlPort": {{$DBPort}},
+            "pgsqlDatabase": {{$DBName}},
+            "pgsqlUserId": {{$DBUserName}},
+            "pgsqlPassword": {{$DBPassword}},
         }
     }

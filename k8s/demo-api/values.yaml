@@ -3,15 +3,14 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-apiPath: /api/demo/
+apiPath: /api/demo-api
 image:
-  repository: registry.local:5000/demo-api
+  repository: demo-api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: ""
 
-env:
-  ASPNETCORE_ENVIRONMENT: Development
+env: []
 
 imagePullSecrets: []
 nameOverride: ""
@@ -46,7 +45,7 @@ service:
   port: 80
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   annotations:
     {}
@@ -55,7 +54,7 @@ ingress:
   hosts:
     - host:
       paths:
-        - path: /api/demo/
+        - path: /
           pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
@@ -67,15 +66,15 @@ resources:
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:
-    cpu: 100m
-    memory: 128Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 autoscaling:
-  enabled: true
+  enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
@@ -86,3 +85,18 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+postgresql:
+  enabled: true
+  auth:
+    username: admin
+    password: P@ssw0rd$123WER
+    database: demo-api-db
+  architecture: standalone
+
+externalDatabase:
+  host: ""
+  port: 5432
+  user: ""
+  database: ""
+  password: ""
