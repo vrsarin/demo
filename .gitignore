@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 **/.data
 **/*.tgz
+/data/demo-api/pgsql
+/k8s/values-pgsql.yaml

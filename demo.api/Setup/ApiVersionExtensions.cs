@@ -5,14 +5,14 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     internal static class ApiVersionExtensions
     {
-        private  const string API_VERSION_READER = "x-api-version";
+        private const string API_VERSION_READER = "x-api-version";
         private const string API_VERSION_GROUP_FORMAT = "'v'VVV";
 
         public static IServiceCollection SetupApiVersion(this IServiceCollection services)
         {
             services.AddApiVersioning(config =>
             {
-                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.DefaultApiVersion = new ApiVersion(0, 1, "dev");
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
                 config.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
