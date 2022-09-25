@@ -1,14 +1,13 @@
 # Sample Micro-Applications and Micro-Services
+
 ## Setup Development Environment
 
-<<<<<<< HEAD
 ### Prerequisite
+
 - [ ] Swager
 - [ ] Versioning
-=======
-## Setup Development Environment
 
-### Prerequisite
+## Setup Development Environment
 
 1. Docker Desktop
 2. k3d
@@ -29,8 +28,9 @@ k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer 
 
 - [x] Swager
 - [x] Versioning
->>>>>>> 8d66e66 (Testing Commit hook)
+
   - https://github.com/dotnet/aspnet-api-versioning
+
 - [ ] Model Versioning using oData
   - https://www.bytefish.de/blog/aspnet_core_odata_example.html
   -
