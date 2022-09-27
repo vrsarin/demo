@@ -2,11 +2,11 @@
 
 namespace demo.api.Utils
 {
-    public class ConfigurationManager : IConfigurationManager
+    public class APIConfigurationManager : IAPIConfigurationManager
     {
         private readonly IConfiguration configuration;
 
-        public ConfigurationManager(IConfiguration configuration)
+        public APIConfigurationManager(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
@@ -24,7 +24,7 @@ namespace demo.api.Utils
         {
             get
             {
-                return $"host={this.configuration["apiConfig:pgsqlDBName"]};port={this.configuration["apiConfig:pgsqlPort"]};database={this.configuration["apiConfig:pgsqlDatabase"]};username={this.configuration["apiConfig:pgsqlUserId"]};password={this.configuration["apiConfig:pgsqlPassword"]}";
+                return $"Server={this.configuration["apiConfig:pgsqlHost"]};Port={this.configuration["apiConfig:pgsqlPort"]};Database={this.configuration["apiConfig:pgsqlDatabase"]};User Id={this.configuration["apiConfig:pgsqlUserId"]};Password={this.configuration["apiConfig:pgsqlPassword"]}";
             }
 
         }

@@ -1,11 +1,14 @@
+using demo.api.Data;
 using demo.api.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.Linq;
 
 namespace demo.api
 {
@@ -13,24 +16,26 @@ namespace demo.api
     {
         public IConfiguration Configuration { get; }
 
-        private readonly IConfigurationManager configurationManager;
+        private readonly IAPIConfigurationManager configurationManager;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            this.configurationManager = new ConfigurationManager(configuration);
+            this.configurationManager = new APIConfigurationManager(configuration);
 
         }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             Log.Logger.Information("Started Startup ConfigureServices");
-            services.AddControllers();            
-            services.AddSingleton<IConfigurationManager>(this.configurationManager);            
+            services.AddControllers();
+            services.AddSingleton<IAPIConfigurationManager>(this.configurationManager);
             services.SetupApiVersion();
             services.SetupSwaggerDocumentation();
             //services.AddHealthChecksUI();
             services.AddHealthChecks();
+            services.AddDbContext<DemoApiDbContext>(ctx => ctx.UseNpgsql(this.configurationManager.PgsqlConnectionString));
+
             Log.Logger.Information("Completed Startup ConfigureServices");
         }
 
@@ -52,6 +57,11 @@ namespace demo.api
 
             app.UseSwaggerDocument(provider, true);
 
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dataContext = scope.ServiceProvider.GetRequiredService<DemoApiDbContext>();
+                dataContext.Database.Migrate();
+            }
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
