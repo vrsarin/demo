@@ -9,6 +9,19 @@ services:
     build:
       context: .
       dockerfile: demo.api/Dockerfile
+    depends_on:
+    - demo-db
+   
+  demo.api.bdd.tests:
+    container_name: demo-bdd-test 
+    image: ${DOCKER_REGISTRY-}demoapibddtests
+    build:
+      context: .
+      dockerfile: demo.api.bdd.tests/Dockerfile
+    volumes:
+    - ./.testreports:/app/TestReport
+    depends_on:
+    - demo.api
 
   demo-db:
     container_name: demo-db
@@ -16,9 +29,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: admin # The PostgreSQL user (useful to connect to the database)
-      POSTGRES_PASSWORD: P@ssw0d!123 # The PostgreSQL password (useful to connect to the database)
-      POSTGRES_DB: demo-api-db # The PostgreSQL default database (automatically created at first launch)
+      POSTGRES_USER: admin 
+      POSTGRES_PASSWORD: P@ssw0d!123
+      POSTGRES_DB: demo-api-db
     volumes:
       - ./.data/demo-api/pgsql:/var/lib/postgresql/data/
 
@@ -31,13 +44,15 @@ services:
   #     PGADMIN_DEFAULT_EMAIL: vsarin@virtusa.com
   #     PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
 
-  # demo-test-db:
-  #   container_name: demo-test-db
-  #   image: "postgres:latest"
-  #   restart: always
-  #   ports:
-  #     - "5434:5432"
-  #   environment:
-  #     POSTGRES_USER: test-admin # The PostgreSQL user (useful to connect to the database)
-  #     POSTGRES_PASSWORD: P@ssw0d!123 # The PostgreSQL password (useful to connect to the database)
-  #     POSTGRES_DB: demo-api-test-db # The PostgreSQL default database (automatically created at first launch)
+  demo-test-db:
+    container_name: demo-test-db
+    image: "postgres:latest"
+    restart: always
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: test-admin
+      POSTGRES_PASSWORD: P@ssw0d!123
+      POSTGRES_DB: demo-api-test-db
+
+

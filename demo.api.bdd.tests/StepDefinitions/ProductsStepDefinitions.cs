@@ -52,7 +52,7 @@ namespace demo.api.bdd.tests.StepDefinitions
         [When(@"Post the product using url '([^']*)'")]
         public async Task WhenPostTheProductUsingUrlAsync(string operation)
         {
-            var client = new RestClient("http://localhost:8089");
+            var client = new RestClient("http://demo-api:8089");
             CancellationToken cancellationToken = default;
             var request = new RestRequest()
                     .AddHeader("Content-Type", "application/json")

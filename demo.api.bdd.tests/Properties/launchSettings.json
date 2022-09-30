@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "demo.api.bdd.tests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
