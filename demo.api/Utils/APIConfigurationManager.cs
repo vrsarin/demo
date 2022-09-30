@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 
 namespace demo.api.Utils
 {
@@ -17,6 +18,16 @@ namespace demo.api.Utils
             get
             {
                 return this.configuration["apiConfig:basePath"];
+            }
+        }
+
+        public DbTypeEnum DbType
+        {
+            get
+            {
+                DbTypeEnum dbType;
+                Enum.TryParse<DbTypeEnum>(this.configuration["apiConfig:dbType"],out dbType);
+                return dbType;
             }
         }
 

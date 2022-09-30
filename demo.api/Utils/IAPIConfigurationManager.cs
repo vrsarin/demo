@@ -4,5 +4,7 @@
     {
         string ApiBasePath { get; }
         string PgsqlConnectionString { get; }
+
+        DbTypeEnum DbType { get; }
     }
 }

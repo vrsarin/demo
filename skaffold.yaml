@@ -1,0 +1,21 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: demo-app
+
+build:
+  local:
+    useBuildkit: true
+  tagPolicy:
+    customTemplate:
+      template: "latest"
+  artifacts:
+    - image: demo-api
+      docker:
+        dockerfile: demo.api/Dockerfile
+deploy:
+  helm:
+    releases:
+      - name: demo-app
+        chartPath: ./k8s
+        namespace: demo

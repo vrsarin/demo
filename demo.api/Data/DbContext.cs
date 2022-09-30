@@ -10,16 +10,30 @@ namespace demo.api.Data
     {
         private readonly IAPIConfigurationManager configurationManager;
 
-        public DemoApiDbContext(IAPIConfigurationManager configurationManager) : base()
+
+        public DemoApiDbContext(DbContextOptions options):base(options)
         {
-            this.configurationManager = configurationManager;
+
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(this.configurationManager.PgsqlConnectionString);
-            //optionsBuilder.UseNpgsql($"host=localhost;port=5432;database=demo-api-db;username=admin;password=P@ssw0d!123");
-        }
+
+        //public DemoApiDbContext(IAPIConfigurationManager configurationManager) : base()
+        //{
+        //    this.configurationManager = configurationManager;
+        
+        //}
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (this.configurationManager != null && !string.IsNullOrEmpty(this.configurationManager.PgsqlConnectionString))
+        //    {
+        //        optionsBuilder.UseNpgsql(this.configurationManager.PgsqlConnectionString);
+        //    }
+        //    else
+        //    {
+        //        optionsBuilder.UseInMemoryDatabase("LOCAL-DB");
+        //    }
+        //}
 
         public DbSet<Product> Products { get; set; }
     }

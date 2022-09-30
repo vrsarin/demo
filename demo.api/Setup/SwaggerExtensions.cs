@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Linq;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -9,19 +13,21 @@ namespace Microsoft.Extensions.DependencyInjection
         
         public static IServiceCollection SetupSwaggerDocumentation(this IServiceCollection services)
         {
-            var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
+            var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();            
             services.AddSwaggerGen(options =>
             {
-                foreach (var description in provider.ApiVersionDescriptions)
+                options.DocInclusionPredicate((docName, apiDesc) =>
                 {
-                    options.SwaggerDoc(
-                        description.GroupName,
-                        new OpenApiInfo
-                        {
-                            Title = "Demo API",
-                            Version = description.ApiVersion.ToString()
-                        });
-                }
+                    if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+
+                    var versions = methodInfo.DeclaringType
+                        .GetCustomAttributes(true)
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    return versions.Any(v => $"v{v.ToString()}" == docName);
+                });
+              
                 options.EnableAnnotations();
             });
             return services;

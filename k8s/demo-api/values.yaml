@@ -85,18 +85,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-postgresql:
-  enabled: true
-  auth:
-    username: admin
-    password: P@ssw0rd$123WER
-    database: demo-api-db
-  architecture: standalone
-
-externalDatabase:
-  host: ""
-  port: 5432
-  user: ""
-  database: ""
-  password: ""

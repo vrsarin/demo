@@ -1,8 +1,11 @@
-version: '3.4'
+version: "3.4"
 
 services:
   demo.api:
+    container_name: demo-api
     image: ${DOCKER_REGISTRY-}demoapi
+    ports:
+      - "8089:80"
     build:
       context: .
       dockerfile: demo.api/Dockerfile
@@ -19,12 +22,22 @@ services:
     volumes:
       - ./.data/demo-api/pgsql:/var/lib/postgresql/data/
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    ports:
-      - "8081:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: vsarin@virtusa.com
-      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
- 
+  # pgadmin:
+  #   container_name: pgadmin
+  #   image: dpage/pgadmin4
+  #   ports:
+  #     - "8081:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: vsarin@virtusa.com
+  #     PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+
+  # demo-test-db:
+  #   container_name: demo-test-db
+  #   image: "postgres:latest"
+  #   restart: always
+  #   ports:
+  #     - "5434:5432"
+  #   environment:
+  #     POSTGRES_USER: test-admin # The PostgreSQL user (useful to connect to the database)
+  #     POSTGRES_PASSWORD: P@ssw0d!123 # The PostgreSQL password (useful to connect to the database)
+  #     POSTGRES_DB: demo-api-test-db # The PostgreSQL default database (automatically created at first launch)

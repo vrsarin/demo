@@ -34,7 +34,20 @@ namespace demo.api
             services.SetupSwaggerDocumentation();
             //services.AddHealthChecksUI();
             services.AddHealthChecks();
-            services.AddDbContext<DemoApiDbContext>(ctx => ctx.UseNpgsql(this.configurationManager.PgsqlConnectionString));
+            switch (this.configurationManager.DbType)
+            {
+                case DbTypeEnum.InMemory:
+                    services.AddDbContext<DemoApiDbContext>(opts => opts.UseInMemoryDatabase("LOCAL_DB"));
+                    break;
+                case DbTypeEnum.Postgres:
+                    services.AddDbContext<DemoApiDbContext>(opts => opts.UseNpgsql(this.configurationManager.PgsqlConnectionString));
+                    break;
+                default:
+                    Log.Logger.Error("Couldnot interpret which DBTTYPE is used");
+                    break;
+            }
+
+            
 
             Log.Logger.Information("Completed Startup ConfigureServices");
         }
@@ -56,10 +69,11 @@ namespace demo.api
             app.UseAuthorization();
 
             app.UseSwaggerDocument(provider, true);
-
+            
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dataContext = scope.ServiceProvider.GetRequiredService<DemoApiDbContext>();
+                
                 dataContext.Database.Migrate();
             }
             app.UseEndpoints(endpoints =>

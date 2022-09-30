@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddApiVersioning(config =>
             {
-                config.DefaultApiVersion = new ApiVersion(0, 1, "dev");
+                config.DefaultApiVersion = new ApiVersion(1,0);
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
                 config.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
