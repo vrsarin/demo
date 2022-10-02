@@ -1,7 +1,8 @@
 demo-api:
   image:
-    repository: registry.local:5000/demo-api
-    tag: "latest"
+    repository: registry.localhost:5000/demo-api
+    tag: latest
+    pullPolicy: IfNotPresent
   apiPath: /api/demo/
   dbType: Postgres
   env:

@@ -86,5 +86,33 @@ namespace demo.api.Controllers.V1
             }
             return Ok();
         }
+
+        [HttpDelete]
+        [MapToApiVersion("1.0")]
+        public async Task<IActionResult> DeleteProduct(Guid id)
+        {
+            try
+            {
+                var dbData = dbContext.Products.Where(p => p.Id.Equals(id));
+                var recordsFound = dbData.Count();
+                if(recordsFound.Equals(0))
+                {
+                    return NoContent();
+                }
+                else if(recordsFound>1)
+                {
+                    return Problem($"There was some problem deleting the product with ID='{id}'");
+                }
+                dbContext.Products.Remove(dbData.Single());
+                await dbContext.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return Problem($"There was some problem deleting the product with ID='{id}'");
+            }
+        }
+    
     }
 }

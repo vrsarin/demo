@@ -6,16 +6,22 @@ metadata:
 build:
   local:
     useBuildkit: true
+    useDockerCLI: true
   tagPolicy:
-    customTemplate:
-      template: "latest"
+    sha256: {}
   artifacts:
     - image: demo-api
-      docker:
-        dockerfile: demo.api/Dockerfile
+      custom:
+        buildCommand: echo 'FROM busybox' | docker build --build-arg BUILD_CONFIG=Debug -f demo.api/Dockerfile .
 deploy:
   helm:
     releases:
       - name: demo-app
         chartPath: ./k8s
         namespace: demo
+        createNamespace: true
+        # skipBuildDependencies: true
+        artifactOverrides:
+          image: demo-api
+        imageStrategy:
+          helm: {}
