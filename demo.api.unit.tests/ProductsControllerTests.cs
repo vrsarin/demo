@@ -7,23 +7,24 @@ namespace demo.api.unit.tests
 {
     public class ProductsControllerV1Tests
     {
-       
+
         private readonly DemoApiDbContext dbContext;
 
         public ProductsControllerV1Tests()
         {
-            dbContext = new DemoApiDbContext(new DbContextOptionsBuilder().UseInMemoryDatabase("LOCAL-DB").Options); 
+            dbContext = new DemoApiDbContext(new DbContextOptionsBuilder().UseInMemoryDatabase("LOCAL-DB").Options);
         }
 
         [Fact]
         public async void GetProductsEmptyArray()
         {
-            
-            var productController = new ProductsController(dbContext);
 
-            var products= await productController.GetProducts();
+            var productController = new ProductsController(dbContext);
+            int found = 1;
+            var products = await productController.GetProducts();
             // Check if the return type is correct
             Assert.IsAssignableFrom<IEnumerable<Product>>(products);
+            // Assert.Equal(2, found);
         }
 
 
