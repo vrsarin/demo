@@ -11,8 +11,11 @@ build:
     sha256: {}
   artifacts:
     - image: demo-api
-      custom:
-        buildCommand: echo 'FROM busybox' | docker build --build-arg BUILD_CONFIG=Debug -f demo.api/Dockerfile .
+      docker:
+        dockerfile: demo.api/Dockerfile
+        buildArgs:
+          BUILD_CONFIG: Debug
+
 deploy:
   helm:
     releases:

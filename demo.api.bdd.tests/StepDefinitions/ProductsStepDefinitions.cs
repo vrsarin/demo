@@ -52,25 +52,21 @@ namespace demo.api.bdd.tests.StepDefinitions
         [When(@"Post the product using url '([^']*)'")]
         public async Task WhenPostTheProductUsingUrlAsync(string operation)
         {
-            var client = new RestClient("http://demo-api:8089");
+            var client = new RestClient("http://localhost:8080/api/demo");
             CancellationToken cancellationToken = default;
-            var request = new RestRequest()
+            var request = new RestRequest(operation)
                     .AddHeader("Content-Type", "application/json")
                     .AddHeader("Accept", "application/json")
                     .AddJsonBody(this.context.Get<Product>());
             var response = await client.PostAsync(request, cancellationToken);
             try
             {
-                this.context.Set(response.StatusCode, "ResponseStatusCode");           
+                this.context.Set(response.StatusCode, "ResponseStatusCode");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string a = ex.Message;
-            }
-            finally
-            {
-
-            }
+            }            
         }
 
         [Then(@"api should return httpstatuscode (.*)")]
