@@ -15,7 +15,11 @@ build:
         dockerfile: demo.api/Dockerfile
         buildArgs:
           BUILD_CONFIG: Debug
-
+test:
+  - image: demo-api
+    context: .
+    custom:
+      - command: "run-tests.sh"
 deploy:
   helm:
     releases:
@@ -28,3 +32,14 @@ deploy:
           image: demo-api
         imageStrategy:
           helm: {}
+    hooks:
+      after:
+        - host:
+            command:
+              [
+                "livingdoc",
+                "test-assembly",
+                "./demo.api.bdd.tests/bin/Debug/net6.0/demo.api.bdd.tests.dll",
+                "-t",
+                "./demo.api.bdd.tests/bin/debug/net6.0/TestExecution.json",
+              ]

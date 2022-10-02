@@ -8,6 +8,11 @@
 2. k3d
 3. Git for Windows
 4. <strong>IDE</strong>: Visual Studio Code, Visual Studio Community
+5. Install Living Doc CLI
+
+```dotnetcli
+    dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
+```
 
 ### Configure
 
