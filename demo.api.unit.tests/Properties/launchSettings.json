@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "demo.api.unit.tests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
