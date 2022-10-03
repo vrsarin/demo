@@ -28,17 +28,7 @@ namespace demo.api.Controllers.V1
         [MapToApiVersion("1.0")]
         public async Task<IEnumerable<Product>> GetProducts()
         {
-            List<Product> products = new List<Product>();
-            try
-            {
-                products = await dbContext.Products.ToListAsync<Product>();
-            }
-            catch (Exception ex)
-            {
-
-                string a = ex.Message;
-            }
-            return products;
+            return await dbContext.Products.ToListAsync<Product>();
         }
 
         [HttpPost]
@@ -48,7 +38,7 @@ namespace demo.api.Controllers.V1
 
             try
             {
-                if (await dbContext.Products.Where(p => p.Id.Equals(product.Id)).CountAsync() > 0)
+                if (await dbContext.Products.Where(p => p.Id.Equals(product.Id)).AnyAsync())
                 {
                     return BadRequest($"Product with Id={product.Id} already exist");
                 }
@@ -57,10 +47,9 @@ namespace demo.api.Controllers.V1
             }
             catch (Exception ex)
             {
-
-                string a = ex.Message;
                 return Problem(ex.Message);
             }
+
             return Ok();
         }
 
@@ -71,7 +60,7 @@ namespace demo.api.Controllers.V1
 
             try
             {
-                if (await dbContext.Products.Where(p => p.Id.Equals(id)).CountAsync() == 0)
+                if (await dbContext.Products.Where(p => p.Id.Equals(id)).AnyAsync())
                 {
                     return NotFound($"Product with Id={id} not found");
                 }
@@ -80,8 +69,6 @@ namespace demo.api.Controllers.V1
             }
             catch (Exception ex)
             {
-
-                string a = ex.Message;
                 return Problem(ex.Message);
             }
             return Ok();
@@ -95,11 +82,11 @@ namespace demo.api.Controllers.V1
             {
                 var dbData = dbContext.Products.Where(p => p.Id.Equals(id));
                 var recordsFound = dbData.Count();
-                if(recordsFound.Equals(0))
+                if (recordsFound.Equals(0))
                 {
                     return NoContent();
                 }
-                else if(recordsFound>1)
+                else if (recordsFound > 1)
                 {
                     return Problem($"There was some problem deleting the product with ID='{id}'");
                 }
@@ -113,6 +100,6 @@ namespace demo.api.Controllers.V1
                 return Problem($"There was some problem deleting the product with ID='{id}'");
             }
         }
-    
+
     }
 }

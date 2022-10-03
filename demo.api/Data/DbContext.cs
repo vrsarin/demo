@@ -8,33 +8,11 @@ namespace demo.api.Data
 {
     public class DemoApiDbContext : DbContext
     {
-        private readonly IAPIConfigurationManager configurationManager;
-
-
-        public DemoApiDbContext(DbContextOptions options):base(options)
+        public DemoApiDbContext(DbContextOptions options) : base(options)
         {
 
         }
-
-
-        //public DemoApiDbContext(IAPIConfigurationManager configurationManager) : base()
-        //{
-        //    this.configurationManager = configurationManager;
         
-        //}
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (this.configurationManager != null && !string.IsNullOrEmpty(this.configurationManager.PgsqlConnectionString))
-        //    {
-        //        optionsBuilder.UseNpgsql(this.configurationManager.PgsqlConnectionString);
-        //    }
-        //    else
-        //    {
-        //        optionsBuilder.UseInMemoryDatabase("LOCAL-DB");
-        //    }
-        //}
-
         public DbSet<Product> Products { get; set; }
     }
 }

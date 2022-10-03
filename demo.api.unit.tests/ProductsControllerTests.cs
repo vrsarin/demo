@@ -16,20 +16,20 @@ namespace demo.api.unit.tests
         }
 
         [Fact]
-        public async void GetProductsEmptyArray()
+        public async Task GetProductsEmptyArray()
         {
 
             var productController = new ProductsController(dbContext);
-            int found = 1;
+    
             var products = await productController.GetProducts();
             // Check if the return type is correct
             Assert.IsAssignableFrom<IEnumerable<Product>>(products);
-            // Assert.Equal(2, found);
+
         }
 
 
         [Fact]
-        public async void AddProducts()
+        public async Task AddProducts()
         {
             var productController = new ProductsController(dbContext);
             await productController.AddProduct(new Product

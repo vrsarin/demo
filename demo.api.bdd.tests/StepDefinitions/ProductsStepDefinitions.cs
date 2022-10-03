@@ -63,10 +63,10 @@ namespace demo.api.bdd.tests.StepDefinitions
             {
                 this.context.Set(response.StatusCode, "ResponseStatusCode");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                string a = ex.Message;
-            }            
+                this.context.Set(HttpStatusCode.InternalServerError, "ResponseStatusCode");
+            }
         }
 
         [Then(@"api should return httpstatuscode (.*)")]

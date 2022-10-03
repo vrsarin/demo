@@ -19,7 +19,9 @@ COPY ["demo.api/demo.api.csproj", "demo.api/"]
 RUN dotnet restore "demo.api/demo.api.csproj"
 COPY . .
 WORKDIR "/src/demo.api"
+
 RUN dotnet build "demo.api.csproj" -c $CONFIGURATION -o /app/build
+
 
 FROM build AS publish
 RUN dotnet publish "demo.api.csproj" -c $CONFIGURATION -o /app/publish /p:UseAppHost=false

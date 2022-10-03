@@ -354,3 +354,5 @@ MigrationBackup/
 /k8s/values-pgsql.yaml
 **/.testreports
 LivingDoc.html
+.sonarqube/
+.sonarlint/

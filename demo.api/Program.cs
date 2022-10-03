@@ -9,9 +9,13 @@ namespace demo.api
 {
     public class Program
     {
+        protected Program()
+        {
+
+        }
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()                
+            Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .CreateBootstrapLogger();
 
@@ -33,7 +37,7 @@ namespace demo.api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host
-            .CreateDefaultBuilder(args)           
+            .CreateDefaultBuilder(args)
             //.UseSerilog((ctx, svc, cfg) => cfg
             //    .ReadFrom.Configuration(ctx.Configuration)
             //    .ReadFrom.Services(svc)

@@ -14,7 +14,7 @@ namespace demo.api.integration.tests
         public ProductsControllerV1Tests()
         {
 
-            var testServer = new WebApplicationFactory<Program>().WithWebHostBuilder(conf =>
+                var testServer = new WebApplicationFactory<Program>().WithWebHostBuilder(conf =>
             {
                 conf
                 .ConfigureAppConfiguration((ctx, cfg) =>
@@ -28,7 +28,7 @@ namespace demo.api.integration.tests
         }
 
         [Fact]
-        public async void GetProductsEmptyArray()
+        public async Task GetProductsEmptyArray()
         {
 
             var response = await this.client.GetAsync("/v1/products");
@@ -41,7 +41,7 @@ namespace demo.api.integration.tests
 
 
         [Fact]
-        public async void AddProducts()
+        public async Task AddProducts()
         {
             var product = new Product
             {

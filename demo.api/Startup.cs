@@ -32,7 +32,6 @@ namespace demo.api
             services.AddSingleton<IAPIConfigurationManager>(this.configurationManager);
             services.SetupApiVersion();
             services.SetupSwaggerDocumentation();
-            //services.AddHealthChecksUI();
             services.AddHealthChecks();
             switch (this.configurationManager.DbType)
             {
@@ -47,7 +46,7 @@ namespace demo.api
                     break;
             }
 
-            
+
 
             Log.Logger.Information("Completed Startup ConfigureServices");
         }
@@ -61,7 +60,7 @@ namespace demo.api
             }
 
             app.UseSerilogRequestLogging();
-            //app.UseHttpsRedirection();
+
             app.UsePathBase(this.configurationManager.ApiBasePath);
 
             app.UseRouting();
@@ -69,21 +68,17 @@ namespace demo.api
             app.UseAuthorization();
 
             app.UseSwaggerDocument(provider, true);
-            
+
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dataContext = scope.ServiceProvider.GetRequiredService<DemoApiDbContext>();
-                
+
                 dataContext.Database.Migrate();
             }
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks(string.Empty);
-                //endpoints.MapHealthChecksUI(options =>
-                //{
-                //    options.UIPath = "/healthui";
-                //});
 
             });
             Log.Logger.Information("Completed Startup Configure");
