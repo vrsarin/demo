@@ -19,41 +19,57 @@ namespace demo.api.bdd.tests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ProductsFeature : object, Xunit.IClassFixture<ProductsFeature.FixtureData>, System.IDisposable
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
+    public partial class AddProductsFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
+        private Microsoft.VisualStudio.TestTools.UnitTesting.TestContext _testContext;
+        
         private static string[] featureTags = ((string[])(null));
         
-        private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
-        
-#line 1 "Products.feature"
+#line 1 "AddProducts.feature"
 #line hidden
         
-        public ProductsFeature(ProductsFeature.FixtureData fixtureData, demo_api_bdd_tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
         {
-            this._testOutputHelper = testOutputHelper;
-            this.TestInitialize();
+            get
+            {
+                return this._testContext;
+            }
+            set
+            {
+                this._testContext = value;
+            }
         }
         
-        public static void FeatureSetup()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
+        public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Products", "A short summary of the feature", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "AddProducts", "A short summary of the feature", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
+        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute()]
         public static void FeatureTearDown()
         {
             testRunner.OnFeatureEnd();
             testRunner = null;
         }
         
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute()]
         public void TestInitialize()
         {
+            if (((testRunner.FeatureContext != null) 
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "AddProducts")))
+            {
+                global::demo.api.bdd.tests.Features.AddProductsFeature.FeatureSetup(null);
+            }
         }
         
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute()]
         public void TestTearDown()
         {
             testRunner.OnScenarioEnd();
@@ -62,7 +78,7 @@ namespace demo.api.bdd.tests.Features
         public void ScenarioInitialize(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)
         {
             testRunner.OnScenarioInitialize(scenarioInfo);
-            testRunner.ScenarioContext.ScenarioContainer.RegisterInstanceAs<Xunit.Abstractions.ITestOutputHelper>(_testOutputHelper);
+            testRunner.ScenarioContext.ScenarioContainer.RegisterInstanceAs<Microsoft.VisualStudio.TestTools.UnitTesting.TestContext>(_testContext);
         }
         
         public void ScenarioStart()
@@ -75,19 +91,14 @@ namespace demo.api.bdd.tests.Features
             testRunner.CollectScenarioErrors();
         }
         
-        void System.IDisposable.Dispose()
-        {
-            this.TestTearDown();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Add new product")]
-        [Xunit.TraitAttribute("FeatureTitle", "Products")]
-        [Xunit.TraitAttribute("Description", "Add new product")]
-        [Xunit.TraitAttribute("Category", "producttag")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add new product")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "AddProducts")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("producttag1")]
         public void AddNewProduct()
         {
             string[] tagsOfScenario = new string[] {
-                    "producttag"};
+                    "producttag1"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add new product", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
@@ -120,22 +131,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             }
             this.ScenarioCleanup();
-        }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
-        [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        public class FixtureData : System.IDisposable
-        {
-            
-            public FixtureData()
-            {
-                ProductsFeature.FeatureSetup();
-            }
-            
-            void System.IDisposable.Dispose()
-            {
-                ProductsFeature.FeatureTearDown();
-            }
         }
     }
 }

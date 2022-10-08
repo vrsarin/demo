@@ -5,12 +5,12 @@ using System.Net;
 namespace demo.api.bdd.tests.StepDefinitions
 {
     [Binding]
-    public class ProductsStepDefinitions
+    public class AddProductsStepDefinitions
     {
         private readonly ScenarioContext context;
 
 
-        public ProductsStepDefinitions(ScenarioContext context)
+        public AddProductsStepDefinitions(ScenarioContext context)
         {
             this.context = context;
         }
@@ -19,8 +19,10 @@ namespace demo.api.bdd.tests.StepDefinitions
         public void GivenTheProductHasANewGuid()
         {
             this.context.Clear();
-            var product = new Product();
-            product.Id = Guid.NewGuid();
+            var product = new Product
+            {
+                Id = Guid.NewGuid()
+            };
             this.context.Set(product);
         }
 
@@ -59,6 +61,7 @@ namespace demo.api.bdd.tests.StepDefinitions
                     .AddHeader("Accept", "application/json")
                     .AddJsonBody(this.context.Get<Product>());
             var response = await client.PostAsync(request, cancellationToken);
+            Thread.Sleep(10000);
             try
             {
                 this.context.Set(response.StatusCode, "ResponseStatusCode");
@@ -72,7 +75,8 @@ namespace demo.api.bdd.tests.StepDefinitions
         [Then(@"api should return httpstatuscode (.*)")]
         public void ThenApiShouldReturnHttpstatuscode(int statusCode)
         {
-            Assert.Equal(statusCode, (int)context.Get<HttpStatusCode>("ResponseStatusCode"));
+            int status = (int)context.Get<HttpStatusCode>("ResponseStatusCode");
+            Assert.AreEqual(statusCode, status);
         }
     }
 }

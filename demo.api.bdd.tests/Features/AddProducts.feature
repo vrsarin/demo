@@ -1,8 +1,8 @@
-﻿Feature: Products
+﻿Feature: AddProducts
 
 A short summary of the feature
 
-@producttag
+@producttag1
 Scenario: Add new product
 	Given The product has a new guid
 	And The product name is 'Lathe'
