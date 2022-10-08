@@ -23,4 +23,6 @@
 **/values.dev.yaml
 LICENSE
 README.md
+**/appsettings.test.json
 **/appsettings.Development.json
+**/.[Dd]ata

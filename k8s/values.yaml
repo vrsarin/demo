@@ -1,9 +1,10 @@
 demo-api:
   image:
-    repository: registry.local:5000/demo-api
-    pullPolicy: Always
-    tag: "latest"
+    repository: registry.localhost:5000/demo-api
+    tag: latest
+    pullPolicy: IfNotPresent
   apiPath: /api/demo/
+  dbType: Postgres
   env:
     ASPNETCORE_ENVIRONMENT: Development
   ingress:
@@ -27,11 +28,13 @@ demo-api:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
-  # postgresql:
-  #   enabled: false
-  # externalDatabase:
-  #   host: "test-db"
-  #   port: 5435
-  #   user: testUser
-  #   database: test-db
-  #   password: "XYX&@#Rsf"
+  postgresql:
+    enabled: true
+    auth:
+      username: admin
+      password: P@ssw0rd$123WER
+      database: demo-app-db
+    architecture: standalone
+    # primary:
+    #   service:
+    #     type: LoadBalancer

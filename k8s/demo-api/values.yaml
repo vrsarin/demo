@@ -1,14 +1,15 @@
 # Default values for demo-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+global:
+  postgresql:
+    architecture: standalone
 
 replicaCount: 1
 apiPath: /api/demo-api
 image:
-  repository: demo-api
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  repository: registry.local:5000/demo-api
+  tag: latest
 
 env: []
 
@@ -92,7 +93,6 @@ postgresql:
     username: admin
     password: P@ssw0rd$123WER
     database: demo-api-db
-  architecture: standalone
 
 externalDatabase:
   host: ""

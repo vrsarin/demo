@@ -26,7 +26,8 @@ data:
         },
         "apiConfig": {
             "basePath": "{{ .Values.apiPath }}",
-            "pgsqlDBName": {{$DBName}},
+            "dbType": "{{ .Values.dbType }}",
+            "pgsqlHost": {{$DBHost}},
             "pgsqlPort": {{$DBPort}},
             "pgsqlDatabase": {{$DBName}},
             "pgsqlUserId": {{$DBUserName}},

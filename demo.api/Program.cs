@@ -9,11 +9,15 @@ namespace demo.api
 {
     public class Program
     {
+        protected Program()
+        {
+
+        }
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()                
+            Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
-                .CreateLogger();
+                .CreateBootstrapLogger();
 
             try
             {
@@ -34,12 +38,10 @@ namespace demo.api
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host
             .CreateDefaultBuilder(args)
-            .UseSerilog((ctx, svc, cfg) => cfg
-                .ReadFrom.Configuration(ctx.Configuration)
-                .ReadFrom.Services(svc)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-            )
+            //.UseSerilog((ctx, svc, cfg) => cfg
+            //    .ReadFrom.Configuration(ctx.Configuration)
+            //    .ReadFrom.Services(svc)
+            //    .Enrich.FromLogContext())
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
@@ -49,6 +51,7 @@ namespace demo.api
                 cfg.AddJsonFile("appsettings.json", optional: false);
                 cfg.AddJsonFile("appsettings.Development.json", optional: true);
                 cfg.AddJsonFile("appsettings.k8s.json", optional: true);
-            });
+            })
+            .UseSerilog();
     }
 }

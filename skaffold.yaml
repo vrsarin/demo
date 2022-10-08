@@ -1,0 +1,45 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: demo-app
+
+build:
+  local:
+    useBuildkit: true
+    useDockerCLI: true
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: demo-api
+      docker:
+        dockerfile: demo.api/Dockerfile
+        buildArgs:
+          BUILD_CONFIG: Debug
+test:
+  - image: demo-api
+    context: .
+    custom:
+      - command: "run-tests.sh"
+deploy:
+  helm:
+    releases:
+      - name: demo-app
+        chartPath: ./k8s
+        namespace: demo
+        createNamespace: true
+        # skipBuildDependencies: true
+        artifactOverrides:
+          image: demo-api
+        imageStrategy:
+          helm: {}
+    hooks:
+      after:
+        - host:
+            command:
+              [
+                "livingdoc",
+                "test-assembly",
+                "./demo.api.bdd.tests/bin/Debug/net6.0/demo.api.bdd.tests.dll",
+                "-t",
+                "./demo.api.bdd.tests/bin/debug/net6.0/TestExecution.json",
+              ]

@@ -38,13 +38,75 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "type": "docker-build",
+      "label": "docker-build: debug",
+      "dependsOn": ["build"],
+      "dockerBuild": {
+        "tag": "demo:dev",
+        "target": "base",
+        "dockerfile": "${workspaceFolder}/demo.api/Dockerfile",
+        "context": "${workspaceFolder}",
+        "pull": true
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/demo.api/demo.api.csproj"
+      }
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build: release",
+      "dependsOn": ["build"],
+      "dockerBuild": {
+        "tag": "demo:latest",
+        "dockerfile": "${workspaceFolder}/demo.api/Dockerfile",
+        "context": "${workspaceFolder}",
+        "pull": true
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/demo.api/demo.api.csproj"
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: debug",
+      "dependsOn": ["docker-build: debug"],
+      "dockerRun": {},
+      "netCore": {
+        "appProject": "${workspaceFolder}/demo.api/demo.api.csproj",
+        "enableDebugging": true
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: release",
+      "dependsOn": ["docker-build: release"],
+      "dockerRun": {},
+      "netCore": {
+        "appProject": "${workspaceFolder}/demo.api/demo.api.csproj"
+      }
+    },
+    {
+      "type": "docker-compose",
+      "label": "docker-compose:up",
+      "dockerCompose": {
+        "up": {
+          "detached": true,
+          "build": true
+        },
+        "files": [
+          "${workspaceFolder}/docker-compose.yml",
+          "${workspaceFolder}/docker-compose.override.yml"
+        ]
+      }
+    },
+    {
       "label": "bridge-to-kubernetes.resource",
       "type": "bridge-to-kubernetes.resource",
-      "resource": "demoapi-service",
+      "resource": "demo-app-demo-api",
       "resourceType": "service",
-      "ports": [0],
+      "ports": [80],
       "targetCluster": "k3d-dev",
-      "targetNamespace": "default",
+      "targetNamespace": "demo",
       "useKubernetesServiceEnvironmentVariables": false
     },
     {
