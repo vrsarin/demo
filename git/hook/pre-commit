@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Good Test"
+
 cat <<\EOF
 Error: tested.
 EOF
