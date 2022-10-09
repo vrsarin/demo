@@ -1,8 +1,7 @@
 #!/bin/sh
+
 cat <<\EOF
 Error: tested.
-
-
 EOF
 
 exit 1
