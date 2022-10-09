@@ -23,7 +23,7 @@ k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer 
 
 skaffold config set default-repo registry.localhost
 
-git config --local core.hooksPath .githooks
+git config core.hooksPath .githooks
 ```
 
 ```powershell-interactive
