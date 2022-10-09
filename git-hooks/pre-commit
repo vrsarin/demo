@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo "Good Test"
+echo "Testing Commits"
 
 cat <<\EOF
 Error: tested.
 EOF
 
-exit 1
+exit 0

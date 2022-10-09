@@ -1,0 +1,24 @@
+#!/bin/sh
+
+echo "Checking commit-message format..."
+
+## the first arg is the path to the git commit temporary file
+TEMPORARY_FILE_PATH=$1
+
+## get commit-message from the temporary file
+COMMIT_MSG=`head -n1 $TEMPORARY_FILE_PATH`
+
+## init regex to match commit-message format
+REGEX="^\[(hotfix|\w+\-[0-9]+)\]( \w+)+$"
+
+## checking commit-message format
+# if ! [[ $COMMIT_MSG =~ $REGEX ]];then
+#     echo -e "Your commit-message format is not valid:\n$COMMIT_MSG\n"
+#     echo "Valid format examples:"
+#     echo "[PSBO-123] My commit message"
+#     echo "[hotfix] My commit message"
+#     exit 1
+# else
+#     echo "Well done! Your commit-message is valid."
+#     exit 0
+# fi
